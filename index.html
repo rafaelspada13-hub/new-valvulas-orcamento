@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEW Válvulas – Orçamento</title>
+<meta name="description" content="Gerador de orçamento de serviços de campo – NEW Válvulas e Equip. Industriais">
+<meta name="theme-color" content="#1a3a1a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NEW Válvulas">
+<link rel="manifest" href="manifest.json">
+<!-- Ícone para iOS (inline SVG via data URI) -->
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%231a3a1a' rx='32'/%3E%3Ctext x='96' y='130' font-size='110' text-anchor='middle'%3E🔧%3C/text%3E%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root {
+  --green-dark:#1a3a1a;--green-main:#1e5c1e;--green-mid:#2d7a2d;
+  --green-light:#3da63d;--green-glow:#4fc44f;--accent:#7ed957;
+  --steel:#c8d4c8;--steel-dark:#8a9e8a;
+  --bg:#0d1a0d;--bg2:#111f11;--bg3:#162016;
+  --card:#1a2e1a;--card2:#1f381f;
+  --border:#2a442a;--border2:#3a5a3a;
+  --text:#e8f0e8;--text-muted:#8aaa8a;--text-dim:#5a7a5a;
+  --red:#e05555;--amber:#e0a030;--radius:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;
+  background-image:radial-gradient(ellipse at 20% 0%,rgba(30,92,30,.15) 0%,transparent 50%),
+  radial-gradient(ellipse at 80% 100%,rgba(30,92,30,.1) 0%,transparent 50%);}
+header{background:linear-gradient(135deg,var(--green-dark) 0%,#0d140d 100%);border-bottom:2px solid var(--green-mid);
+  padding:0 2rem;position:sticky;top:0;z-index:100;box-shadow:0 4px 24px rgba(0,0,0,.6);}
+.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px;gap:1.5rem;}
+.logo-area{display:flex;align-items:center;gap:14px;}
+.logo-box{width:48px;height:48px;border-radius:6px;background:var(--green-main);border:1px solid var(--green-mid);
+  display:flex;align-items:center;justify-content:center;font-size:22px;}
+.logo-text .brand{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.5rem;color:var(--accent);letter-spacing:1px;}
+.logo-text .sub{font-size:.7rem;color:var(--steel-dark);text-transform:uppercase;letter-spacing:2px;}
+.header-title{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:2px;}
+.header-actions{display:flex;gap:10px;}
+.btn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;
+  padding:8px 18px;border-radius:var(--radius);border:none;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s;}
+.btn-primary{background:linear-gradient(135deg,var(--green-mid),var(--green-light));color:#fff;box-shadow:0 2px 12px rgba(61,166,61,.3);}
+.btn-primary:hover{filter:brightness(1.15);transform:translateY(-1px);}
+.btn-ghost{background:transparent;color:var(--text-muted);border:1px solid var(--border2);}
+.btn-ghost:hover{background:var(--card);color:var(--text);}
+.app{max-width:1400px;margin:0 auto;padding:2rem;}
+.stepper{display:flex;margin-bottom:2rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.step{flex:1;padding:14px 20px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .2s;border-right:1px solid var(--border);position:relative;}
+.step:last-child{border-right:none;}
+.step:hover{background:var(--card2);}
+.step.active{background:rgba(61,166,61,.12);}
+.step.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--green-light);}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--border2);color:var(--text-muted);
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.step.active .step-num{background:var(--green-light);color:#fff;}
+.step.done .step-num{background:var(--accent);color:var(--green-dark);}
+.step-label{font-size:.8rem;color:var(--text-muted);font-weight:500;}
+.step.active .step-label{color:var(--text);}
+.panel{display:none;}.panel.active{display:block;}
+.section-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:1.5rem;overflow:hidden;}
+.section-header{background:linear-gradient(90deg,var(--green-dark),var(--bg3));border-bottom:1px solid var(--border);
+  padding:12px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
+.section-header h3{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;
+  text-transform:uppercase;letter-spacing:1px;color:var(--accent);display:flex;align-items:center;gap:10px;}
+.section-header h3 .sec-num{background:var(--green-mid);color:#fff;padding:2px 8px;border-radius:4px;font-size:.75rem;}
+.section-subtotal{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:var(--green-glow);}
+.section-toggle{color:var(--text-muted);font-size:.8rem;}
+.section-body{padding:16px 20px;}
+.section-body.collapsed{display:none;}
+.item-row{display:grid;grid-template-columns:2fr 55px 90px 100px 100px;gap:8px;align-items:center;
+  padding:8px 0;border-bottom:1px solid rgba(42,68,42,.4);}
+.item-row:last-child{border-bottom:none;}
+.item-row .item-label{font-size:.85rem;color:var(--text);}
+.item-row .item-unit{font-size:.72rem;color:var(--text-dim);text-align:center;}
+.item-total{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;color:var(--green-glow);text-align:right;}
+.item-total.zero{color:var(--text-dim);}
+.col-header{display:grid;grid-template-columns:2fr 55px 90px 100px 100px;gap:8px;padding:0 0 8px 0;
+  border-bottom:1px solid var(--border2);margin-bottom:4px;}
+.col-header span{font-size:.68rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);font-weight:600;}
+input[type="number"],input[type="text"]{background:var(--bg3);border:1px solid var(--border2);
+  color:var(--text);border-radius:5px;padding:6px 8px;font-family:'Barlow',sans-serif;font-size:.85rem;width:100%;transition:border-color .2s;}
+input[type="number"]:focus,input[type="text"]:focus{outline:none;border-color:var(--green-light);box-shadow:0 0 0 2px rgba(61,166,61,.15);}
+input[type="number"]{text-align:right;}
+input.qty-input{color:#5bc8f5;}
+input.price-input{color:var(--amber);}
+input.func-input{color:#a78bfa;}
+.bdi-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.bdi-card{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
+.bdi-card h4{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;text-transform:uppercase;letter-spacing:2px;
+  color:var(--text-muted);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.bdi-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;
+  border-bottom:1px solid rgba(42,68,42,.3);gap:12px;}
+.bdi-row:last-child{border-bottom:none;}
+.bdi-label{font-size:.88rem;color:var(--text);flex:1;}
+.bdi-label small{display:block;font-size:.72rem;color:var(--text-dim);}
+.bdi-input-wrap{display:flex;align-items:center;gap:6px;}
+.bdi-input-wrap input{width:70px;color:var(--amber)!important;}
+.bdi-pct{font-size:.85rem;color:var(--text-dim);}
+.bdi-value{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:var(--green-glow);min-width:110px;text-align:right;}
+.resumo-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.resumo-table{width:100%;border-collapse:collapse;}
+.resumo-table tr{border-bottom:1px solid rgba(42,68,42,.4);}
+.resumo-table td{padding:9px 4px;font-size:.88rem;}
+.resumo-table td:last-child{text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--green-glow);}
+.resumo-table .pct{color:var(--text-dim);font-size:.75rem;margin-left:6px;}
+.resumo-table .total-row td{border-top:2px solid var(--green-mid);padding-top:12px;font-weight:700;color:var(--text);font-size:1rem;}
+.resumo-table .total-row td:last-child{color:var(--accent);font-size:1.2rem;}
+.price-hero{background:linear-gradient(135deg,var(--green-dark),#0a120a);border:1px solid var(--green-mid);
+  border-radius:var(--radius);padding:28px;text-align:center;position:relative;overflow:hidden;}
+.price-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(61,166,61,.08) 0%,transparent 70%);}
+.price-hero .label{font-size:.75rem;text-transform:uppercase;letter-spacing:3px;color:var(--text-dim);margin-bottom:8px;}
+.price-hero .price{font-family:'Barlow Condensed',sans-serif;font-size:3.2rem;font-weight:800;color:var(--accent);line-height:1;text-shadow:0 0 30px rgba(126,217,87,.3);}
+.price-hero .price-unit{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:600;color:var(--green-glow);margin-top:8px;}
+.price-hero .qty-info{font-size:.8rem;color:var(--text-dim);margin-top:6px;}
+.bdi-breakdown{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:1.5rem;}
+.bdi-breakdown h4{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);margin-bottom:14px;}
+.bdi-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bdi-bar-label{font-size:.8rem;color:var(--text-muted);width:200px;flex-shrink:0;}
+.bdi-bar-track{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.bdi-bar-fill{height:100%;background:linear-gradient(90deg,var(--green-mid),var(--green-glow));border-radius:3px;transition:width .4s;}
+.bdi-bar-val{font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;color:var(--green-glow);width:90px;text-align:right;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group label{font-size:.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);}
+.form-group input,.form-group textarea,.form-group select{background:var(--bg3);border:1px solid var(--border2);
+  color:var(--text);border-radius:5px;padding:10px 12px;font-family:'Barlow',sans-serif;font-size:.88rem;transition:border-color .2s;width:100%;}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--green-light);box-shadow:0 0 0 2px rgba(61,166,61,.15);}
+.form-group textarea{resize:vertical;min-height:80px;}
+.form-group select option{background:var(--bg2);}
+.form-group.full{grid-column:1/-1;}
+.nav-footer{display:flex;justify-content:space-between;align-items:center;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--green-dark);border:1px solid var(--green-mid);
+  color:var(--accent);padding:12px 20px;border-radius:var(--radius);font-size:.88rem;font-weight:600;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);transform:translateY(100px);opacity:0;transition:all .3s;z-index:9999;}
+.toast.show{transform:translateY(0);opacity:1;}
+.save-badge{position:fixed;top:80px;right:16px;background:rgba(126,217,87,.15);border:1px solid rgba(126,217,87,.3);
+  color:var(--accent);padding:6px 12px;border-radius:20px;font-size:.72rem;font-weight:600;z-index:90;letter-spacing:1px;}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
+@media(max-width:900px){
+  .bdi-grid,.resumo-grid,.form-grid{grid-template-columns:1fr;}
+  .stepper{flex-wrap:wrap;}.step{min-width:50%;}
+}
+@media(max-width:600px){
+  .app{padding:1rem;}.header-title{display:none;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-box">🔧</div>
+      <div class="logo-text">
+        <div class="brand">NEW</div>
+        <div class="sub">Válvulas e Equip. Industriais</div>
+      </div>
+    </div>
+    <div class="header-title">Gerador de Orçamento</div>
+    <div class="header-actions">
+      <button class="btn btn-ghost" onclick="resetAll()">↺ Limpar</button>
+      <button class="btn btn-ghost" onclick="saveLocal()" style="color:var(--accent);border-color:var(--green-mid)">💾 Salvar</button>
+      <button class="btn btn-primary" onclick="exportPDF()">⬇ PDF</button>
+    </div>
+  </div>
+</header>
+
+<div class="save-badge" id="save-badge" style="display:none">✓ Salvo</div>
+
+<div class="app">
+  <div class="stepper">
+    <div class="step active" id="step-0" onclick="goStep(0)"><div class="step-num">1</div><div class="step-label">Cliente & Serviço</div></div>
+    <div class="step" id="step-1" onclick="goStep(1)"><div class="step-num">2</div><div class="step-label">Custos de Campo</div></div>
+    <div class="step" id="step-2" onclick="goStep(2)"><div class="step-num">3</div><div class="step-label">Consumíveis</div></div>
+    <div class="step" id="step-3" onclick="goStep(3)"><div class="step-num">4</div><div class="step-label">BDI / Margem</div></div>
+    <div class="step" id="step-4" onclick="goStep(4)"><div class="step-num">5</div><div class="step-label">Resumo & Preço</div></div>
+  </div>
+
+  <!-- PANEL 0: CLIENTE -->
+  <div class="panel active" id="panel-0">
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <h3><span class="sec-num">📋</span> Dados do Cliente e Serviço</h3>
+        <span class="section-toggle">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="form-grid">
+          <div class="form-group"><label>Cliente / Empresa</label><input type="text" id="cliente" placeholder="Nome do cliente" oninput="autoSave()"></div>
+          <div class="form-group"><label>CNPJ / CPF</label><input type="text" id="cnpj" placeholder="00.000.000/0001-00" oninput="autoSave()"></div>
+          <div class="form-group"><label>Contato / Responsável</label><input type="text" id="contato" placeholder="Nome do responsável" oninput="autoSave()"></div>
+          <div class="form-group"><label>Telefone / E-mail</label><input type="text" id="telefone" placeholder="(11) 99999-9999" oninput="autoSave()"></div>
+          <div class="form-group full"><label>Local do Serviço / Planta</label><input type="text" id="local" placeholder="Endereço ou nome da planta industrial" oninput="autoSave()"></div>
+          <div class="form-group full"><label>Descrição do Serviço</label>
+            <textarea id="descricao" placeholder="Ex: Manutenção e reparo de válvulas gaveta DN 6&quot; classe 300..." oninput="autoSave()"></textarea></div>
+          <div class="form-group full"><label>Condições de Pagamento / Observações</label>
+            <textarea id="obs" placeholder="Ex: Pagamento em 30 dias. Não inclui fornecimento de andaimes." oninput="autoSave()"></textarea></div>
+          <div class="form-group"><label>Nº de Válvulas / Unidades</label><input type="number" id="qtd-valvulas" value="1" min="1" oninput="calc();autoSave()"></div>
+          <div class="form-group"><label>Prazo Estimado</label><input type="text" id="prazo" placeholder="Ex: 7 dias úteis" oninput="autoSave()"></div>
+          <div class="form-group"><label>Validade do Orçamento</label><input type="text" id="validade" placeholder="Ex: 15 dias" oninput="autoSave()"></div>
+          <div class="form-group"><label>Nº do Orçamento</label><input type="text" id="num-orc" placeholder="Ex: ORC-2026-001" oninput="autoSave()"></div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-footer"><div></div><button class="btn btn-primary" onclick="goStep(1)">Próximo: Custos de Campo →</button></div>
+  </div>
+
+  <!-- PANEL 1: CUSTOS -->
+  <div class="panel" id="panel-1">
+    <!-- CALCULADORA AUTOMÁTICA -->
+    <div class="section-card" style="border-color:var(--green-light);box-shadow:0 0 0 1px rgba(126,217,87,.15)">
+      <div class="section-header" style="background:linear-gradient(90deg,#1a3a10,#0d1a08)">
+        <h3 style="color:var(--accent)"><span class="sec-num">⚡</span> Calculadora Automática de Diárias</h3>
+        <span style="font-size:.75rem;color:var(--text-dim)">Preenche alimentação, hospedagem, KM e lavanderia automaticamente</span>
+      </div>
+      <div class="section-body">
+        <!-- LINHA 1: Campos principais -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:14px;margin-bottom:16px">
+          <div class="form-group">
+            <label>👷 Nº de Funcionários</label>
+            <input type="number" id="auto-func" value="" min="1" placeholder="Ex: 3" oninput="autoCalc()" style="color:#a78bfa;font-weight:700;font-size:1.05rem">
+          </div>
+          <div class="form-group">
+            <label>📅 Dias de Obra</label>
+            <input type="number" id="auto-dias" value="" min="1" placeholder="Ex: 5" oninput="autoCalc()" style="color:#5bc8f5;font-weight:700;font-size:1.05rem">
+          </div>
+          <div class="form-group">
+            <label>⏱️ Jornada (h/dia)</label>
+            <input type="number" id="auto-horas" value="10" min="1" max="24" placeholder="10" oninput="autoCalc()" style="color:var(--green-glow);font-weight:700">
+          </div>
+          <div class="form-group">
+            <label>🚗 Distância Casa↔Usina (km ida)</label>
+            <input type="number" id="auto-km" value="" min="0" placeholder="Ex: 25" oninput="autoCalc()" style="color:var(--amber);font-weight:700">
+          </div>
+          <div class="form-group">
+            <label>🚙 Veículo (deslocamento diário)</label>
+            <select id="auto-veiculo" onchange="autoCalc()">
+              <option value="">— não calcular KM —</option>
+              <option value="v_carro">Carro Próprio</option>
+              <option value="v_empresa">Carro da Empresa</option>
+              <option value="v_moto">Moto Própria</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- LINHA 2: Checkboxes agrupados -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+
+          <div style="background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:6px;padding:12px">
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:10px">🍽️ Alimentação &amp; Estadia</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.85rem">
+                <input type="checkbox" id="chk-cafe" checked onchange="autoCalc()" style="accent-color:var(--green-light);width:15px;height:15px"> ☕ Café da Manhã</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.85rem">
+                <input type="checkbox" id="chk-almoco" checked onchange="autoCalc()" style="accent-color:var(--green-light);width:15px;height:15px"> 🍱 Almoço</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.85rem">
+                <input type="checkbox" id="chk-jantar" checked onchange="autoCalc()" style="accent-color:var(--green-light);width:15px;height:15px"> 🍽️ Jantar</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.85rem">
+                <input type="checkbox" id="chk-hotel" checked onchange="autoCalc()" style="accent-color:var(--green-light);width:15px;height:15px"> 🏨 Hospedagem (diárias)</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.85rem">
+                <input type="checkbox" id="chk-lav" checked onchange="autoCalc()" style="accent-color:var(--green-light);width:15px;height:15px"> 🧺 Lavanderia (semanal)</label>
+            </div>
+          </div>
+
+          <div style="background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:6px;padding:12px">
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:10px">👷 Mão de Obra, EPI &amp; Equipamentos</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.85rem">
+                <input type="checkbox" id="chk-mo" checked onchange="autoCalc()" style="accent-color:#a78bfa;width:15px;height:15px">
+                <span>👷 Horas MO <small style="color:var(--text-dim)">(func × horas × dias)</small></span></label>
+              <div style="display:flex;align-items:center;gap:8px;padding-left:23px">
+                <span style="font-size:.78rem;color:var(--text-dim)">Função principal:</span>
+                <select id="auto-mo-tipo" onchange="autoCalc()" style="flex:1;background:var(--bg3);border:1px solid var(--border2);color:var(--text);border-radius:4px;padding:4px 6px;font-size:.78rem">
+                  <option value="mo_senior">Técnico Sênior</option>
+                  <option value="mo_pleno">Técnico Pleno</option>
+                  <option value="mo_aux">Auxiliar Técnico</option>
+                  <option value="mo_eng">Engenheiro</option>
+                </select>
+              </div>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.85rem">
+                <input type="checkbox" id="chk-epi" checked onchange="autoCalc()" style="accent-color:var(--green-light);width:15px;height:15px"> 🦺 EPI Básico (1 kit/func)</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.85rem">
+                <input type="checkbox" id="chk-aso" checked onchange="autoCalc()" style="accent-color:var(--green-light);width:15px;height:15px"> 📋 ASO (1 por funcionário)</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.85rem">
+                <input type="checkbox" id="chk-lixadeira" checked onchange="autoCalc()" style="accent-color:var(--amber);width:15px;height:15px"> 🔧 Lixadeira (1 por equipe × dias)</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.85rem">
+                <input type="checkbox" id="chk-ferramentas" checked onchange="autoCalc()" style="accent-color:var(--amber);width:15px;height:15px"> 🧰 Caixa ferramentas (1/func × dias)</label>
+            </div>
+          </div>
+
+        </div>
+        <div id="auto-preview" style="display:none;background:rgba(126,217,87,.06);border:1px solid rgba(126,217,87,.2);border-radius:6px;padding:12px">
+          <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:8px">✅ Preenchido automaticamente:</div>
+          <div id="auto-preview-items" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+          <div style="margin-top:10px;font-size:.75rem;color:var(--text-dim)">⚠️ Valores unitários ajustáveis nas seções abaixo.</div>
+        </div>
+      </div>
+    </div>
+    <div id="sections-container"></div>
+    <div class="nav-footer">
+      <button class="btn btn-ghost" onclick="goStep(0)">← Voltar</button>
+      <button class="btn btn-primary" onclick="goStep(2)">Próximo: Consumíveis →</button>
+    </div>
+  </div>
+
+  <!-- PANEL 2: CONSUMÍVEIS -->
+  <div class="panel" id="panel-2">
+    <div id="consumiveis-container"></div>
+    <div class="nav-footer">
+      <button class="btn btn-ghost" onclick="goStep(1)">← Voltar</button>
+      <button class="btn btn-primary" onclick="goStep(3)">Próximo: BDI / Margem →</button>
+    </div>
+  </div>
+
+  <!-- PANEL 3: BDI -->
+  <div class="panel" id="panel-3">
+    <div class="section-card">
+      <div class="section-header">
+        <h3><span class="sec-num">💰</span> Composição do Preço de Venda – Mark-up Divisor</h3>
+        <span class="section-subtotal" id="bdi-total-header">—</span>
+      </div>
+      <div class="section-body">
+        <div class="bdi-grid">
+          <div class="bdi-card">
+            <h4>Sobre o Custo Direto</h4>
+            <div class="bdi-row">
+              <div class="bdi-label">Overhead / Despesas Adm.<small>Incide sobre o custo direto</small></div>
+              <div class="bdi-input-wrap"><input type="number" class="bdi-input" id="pct-overhead" value="8" min="0" max="100" step="0.5" oninput="calc()"><span class="bdi-pct">%</span></div>
+              <div class="bdi-value" id="val-overhead">—</div>
+            </div>
+            <div class="bdi-row">
+              <div class="bdi-label">Riscos e Imprevistos<small>Incide sobre o custo direto</small></div>
+              <div class="bdi-input-wrap"><input type="number" class="bdi-input" id="pct-riscos" value="5" min="0" max="100" step="0.5" oninput="calc()"><span class="bdi-pct">%</span></div>
+              <div class="bdi-value" id="val-riscos">—</div>
+            </div>
+          </div>
+          <div class="bdi-card">
+            <h4>Sobre o Preço de Venda (por dentro)</h4>
+            <div class="bdi-row">
+              <div class="bdi-label">Impostos (ISS+PIS+COFINS+CSLL)<small>Incide sobre o preço de venda</small></div>
+              <div class="bdi-input-wrap"><input type="number" class="bdi-input" id="pct-impostos" value="8" min="0" max="100" step="0.5" oninput="calc()"><span class="bdi-pct">%</span></div>
+              <div class="bdi-value" id="val-impostos">—</div>
+            </div>
+            <div class="bdi-row">
+              <div class="bdi-label">Seguros e Garantias<small>Incide sobre o preço de venda</small></div>
+              <div class="bdi-input-wrap"><input type="number" class="bdi-input" id="pct-seguros" value="3" min="0" max="100" step="0.5" oninput="calc()"><span class="bdi-pct">%</span></div>
+              <div class="bdi-value" id="val-seguros">—</div>
+            </div>
+            <div class="bdi-row">
+              <div class="bdi-label" style="color:var(--accent);font-weight:600">Margem de Lucro<small style="color:var(--text-dim)">Incide sobre o preço de venda</small></div>
+              <div class="bdi-input-wrap"><input type="number" class="bdi-input" id="pct-lucro" value="25" min="0" max="100" step="0.5" oninput="calc()" style="border-color:var(--green-light)"><span class="bdi-pct">%</span></div>
+              <div class="bdi-value" id="val-lucro" style="color:var(--accent)">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-footer">
+      <button class="btn btn-ghost" onclick="goStep(2)">← Voltar</button>
+      <button class="btn btn-primary" onclick="goStep(4)">Ver Resumo Final →</button>
+    </div>
+  </div>
+
+  <!-- PANEL 4: RESUMO -->
+  <div class="panel" id="panel-4">
+    <div class="resumo-grid">
+      <div class="section-card">
+        <div class="section-header"><h3><span class="sec-num">📊</span> Resumo de Custos</h3></div>
+        <div class="section-body"><table class="resumo-table" id="resumo-table"></table></div>
+      </div>
+      <div>
+        <div class="price-hero">
+          <div class="label">Preço Final de Venda</div>
+          <div class="price" id="preco-final-hero">R$ 0,00</div>
+          <div class="price-unit" id="preco-unit-hero">R$ 0,00 / unidade</div>
+          <div class="qty-info" id="qty-info-hero"></div>
+        </div>
+        <div class="bdi-breakdown"><h4>Composição do Preço</h4><div id="bdi-bars"></div></div>
+      </div>
+    </div>
+    <div class="section-card" style="margin-top:1.5rem">
+      <div class="section-header"><h3><span class="sec-num">📋</span> Dados do Orçamento</h3></div>
+      <div class="section-body"><div class="form-grid" id="resumo-cliente"></div></div>
+    </div>
+    <div class="nav-footer">
+      <button class="btn btn-ghost" onclick="goStep(3)">← Voltar</button>
+      <button class="btn btn-primary" onclick="exportPDF()">⬇ Exportar PDF</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════
+const SECTIONS = [
+  { id:'mo', title:'Mão de Obra – Hora Homem', icon:'👷', isMO:true, items:[
+    {id:'mo_senior',   label:'Técnico de Campo – Sênior',           unit:'h', qty:0, price:60},
+    {id:'mo_pleno',    label:'Técnico de Campo – Pleno',            unit:'h', qty:0, price:70},
+    {id:'mo_eng',      label:'Engenheiro Mecânico / Resp. Técnico', unit:'h', qty:0, price:85},
+    {id:'mo_soldador', label:'Soldador TIG / MIG Certificado',      unit:'h', qty:0, price:70},
+    {id:'mo_inspetor', label:'Inspetor de Qualidade (CWI)',         unit:'h', qty:0, price:100},
+    {id:'mo_end',      label:'Técnico END – LP / US / RT',          unit:'h', qty:0, price:92},
+    {id:'mo_psv',      label:'Técnico PSV / Válvulas de Segurança', unit:'h', qty:0, price:90},
+    {id:'mo_aux',      label:'Auxiliar Técnico',                    unit:'h', qty:0, price:42},
+  ]},
+  { id:'viagem', title:'Viagem e Deslocamento', icon:'🚗', items:[
+    {id:'v_carro',    label:'KM Rodado – Carro Próprio',          unit:'km',     qty:0, price:1},
+    {id:'v_empresa',  label:'KM Rodado – Carro da Empresa',       unit:'km',     qty:0, price:2},
+    {id:'v_moto',     label:'KM Rodado – Moto Própria',           unit:'km',     qty:0, price:0.55},
+    {id:'v_aerea1',   label:'Passagem Aérea – antecipada',        unit:'trecho', qty:0, price:1200},
+    {id:'v_aerea2',   label:'Passagem Aérea – urgência (<48h)',   unit:'trecho', qty:0, price:2000},
+    {id:'v_taxi',     label:'Táxi / Uber / Transfer',             unit:'vb',     qty:0, price:0},
+    {id:'v_frete',    label:'Frete de Equipamentos / Materiais',  unit:'vb',     qty:0, price:0},
+  ]},
+  { id:'hosp', title:'Hospedagem', icon:'🏨', items:[
+    {id:'h_hotel',   label:'Diárias de Hotel / Pousada',              unit:'noite', qty:0, price:150},
+    {id:'h_aluguel', label:'Aluguel – Casa / Quarto (longa estadia)', unit:'mês',   qty:0, price:0},
+  ]},
+  { id:'alim', title:'Alimentação', icon:'🍽️', items:[
+    {id:'a_full',   label:'Alimentação diária completa (café+almoço+jantar)', unit:'dia',      qty:0, price:75},
+    {id:'a_cafe',   label:'Café da Manhã – avulso',                           unit:'refeição', qty:0, price:15},
+    {id:'a_almoco', label:'Almoço – avulso',                                  unit:'refeição', qty:0, price:25},
+    {id:'a_jantar', label:'Jantar / Lanche – avulso',                         unit:'refeição', qty:0, price:35},
+  ]},
+  { id:'outros', title:'Lavanderia / Pedágio / Estacionamento', icon:'🧺', items:[
+    {id:'lav1',    label:'Lavanderia (por semana × funcionário)', unit:'semana/func', qty:0, price:80},
+    {id:'pedagio', label:'Pedágio (total da viagem)',             unit:'vb',          qty:0, price:90},
+    {id:'estac',   label:'Estacionamento',                       unit:'diária',      qty:0, price:0},
+  ]},
+  { id:'mat', title:'Materiais, Peças e Embalagem', icon:'🔩', items:[
+    {id:'mat_gaxeta_ptfe', label:'Gaxeta / Vedação PTFE',              unit:'un',   qty:0, price:0},
+    {id:'mat_gaxeta_graf', label:'Gaxeta Grafite Expandido',           unit:'un',   qty:0, price:0},
+    {id:'mat_oring',       label:'O-ring NBR / EPDM / Viton',          unit:'un',   qty:0, price:0},
+    {id:'mat_sede',        label:'Sede (Seat Ring)',                   unit:'un',   qty:0, price:0},
+    {id:'mat_haste',       label:'Haste (Stem) – Inox 316',            unit:'un',   qty:0, price:0},
+    {id:'mat_obturador',   label:'Obturador / Esfera / Disco',         unit:'un',   qty:0, price:0},
+    {id:'mat_parafusos',   label:'Parafusos e Porcas Inox A2-70',      unit:'kg',   qty:0, price:0},
+    {id:'mat_disco_corte', label:'Discos de Corte / Desbaste',         unit:'un',   qty:0, price:12},
+    {id:'mat_antiseize',   label:'Pasta Anti-Seize (por uso)',          unit:'un',   qty:0, price:0},
+    {id:'mat_kit_lp',      label:'Kit Líquido Penetrante (LP)',         unit:'kit',  qty:0, price:250},
+    {id:'mat_junta',       label:'Junta de Flange (espiro/PTFE/RTJ)',  unit:'un',   qty:0, price:0},
+    {id:'mat_emb_stretch', label:'Embalagem – Filme Stretch',          unit:'rolo', qty:0, price:0},
+    {id:'mat_emb_papelao', label:'Embalagem – Caixa Papelão Reforçado',unit:'un',   qty:0, price:0},
+    {id:'mat_emb_madeira', label:'Embalagem – Caixa de Madeira',       unit:'un',   qty:0, price:0},
+    {id:'mat_outros',      label:'Outros Materiais',                   unit:'vb',   qty:0, price:0},
+  ]},
+  { id:'equip', title:'Equipamentos, Ferramentas e Locações', icon:'🔧', items:[
+    {id:'eq_lixadeira',   label:'Locação de Lixadeira 4"',             unit:'diária', qty:0, price:30},
+    {id:'eq_ferramentas', label:'Locação de Caixa de Ferramentas',     unit:'diária', qty:0, price:40},
+    {id:'eq_macarico',    label:'Locação de Maçarico',                 unit:'diária', qty:0, price:10},
+    {id:'eq_gerador',     label:'Locação de Gerador de Energia',       unit:'diária', qty:0, price:0},
+    {id:'eq_andaime',     label:'Locação de Andaime / Plataforma',     unit:'diária', qty:0, price:0},
+    {id:'eq_torque',      label:'Ferramental Especial (torquímetro)',  unit:'vb',     qty:0, price:0},
+  ]},
+  { id:'insp', title:'Inspeção, Ensaios e Certificações', icon:'🔬', items:[
+    {id:'i_hidro',  label:'Teste Hidrostático (1,5× PN)',           unit:'h',     qty:0, price:0},
+    {id:'i_estanq', label:'Teste de Estanqueidade de Sede',         unit:'h',     qty:0, price:0},
+    {id:'i_lp',     label:'Ensaio LP – Líquido Penetrante',         unit:'h',     qty:0, price:100},
+    {id:'i_pm',     label:'Ensaio PM – Partícula Magnética',        unit:'h',     qty:0, price:0},
+    {id:'i_us',     label:'Ensaio US – Ultrassom',                  unit:'h',     qty:0, price:0},
+    {id:'i_pmi',    label:'PMI – Identificação de Material',        unit:'ponto', qty:0, price:0},
+    {id:'i_psv',    label:'Calibração de PSV / Set Point',          unit:'un',    qty:0, price:0},
+    {id:'i_laudos', label:'Emissão de Laudos e Relatórios',         unit:'vb',    qty:0, price:0},
+  ]},
+  { id:'seg', title:'Segurança do Trabalho e EPI', icon:'🦺', items:[
+    {id:'s_epi_basico', label:'EPI Básico (capacete, óculos, luva, botina)', unit:'kit',    qty:0, price:0},
+    {id:'s_epi_esp',    label:'EPI Especial (respirador, prot. auricular)',  unit:'vb',     qty:0, price:0},
+    {id:'s_nr',         label:'Treinamento NR-13 / NR-35 / NR-10',          unit:'pessoa', qty:0, price:150},
+    {id:'s_aso',        label:'ASO – Atestado de Saúde Ocupacional',         unit:'pessoa', qty:0, price:150},
+  ]},
+  { id:'adm', title:'Custos Administrativos e Documentação', icon:'📄', items:[
+    {id:'adm_proc', label:'Elaboração de Procedimentos (EPS/RPS/PIT)', unit:'vb', qty:0, price:0},
+    {id:'adm_book', label:'Data-Book / Documentação Técnica',          unit:'vb', qty:0, price:0},
+    {id:'adm_art',  label:'Emissão de ART / RRT',                      unit:'un', qty:0, price:350},
+    {id:'adm_cont', label:'Imprevistos / Contingência',                unit:'vb', qty:0, price:500},
+  ]},
+];
+
+const CONSUMIVEIS = [
+  { id:'cons_abr', title:'Abrasivos', icon:'⚙️', items:[
+    {id:'ca_disco_corte_45',  label:'Disco de Corte 4½" (fino)',      unit:'un', qty:0, price:4.50},
+    {id:'ca_disco_corte_7',   label:'Disco de Corte 7"',              unit:'un', qty:0, price:8.50},
+    {id:'ca_disco_desb_45',   label:'Disco de Desbaste 4½"',          unit:'un', qty:0, price:7.00},
+    {id:'ca_disco_flap_45',   label:'Disco Flap 4½" gr.60',           unit:'un', qty:0, price:10.00},
+    {id:'ca_disco_flap_7',    label:'Disco Flap 7" gr.60',            unit:'un', qty:0, price:14.00},
+    {id:'ca_lixa_ferro',      label:'Lixa de Ferro gr.80 (folha)',    unit:'un', qty:0, price:3.50},
+    {id:'ca_lixa_agua',       label:'Lixa d\'Água gr.220 (folha)',    unit:'un', qty:0, price:2.50},
+  ]},
+  { id:'cons_lub', title:'Lubrificantes e Solventes', icon:'🛢️', items:[
+    {id:'cl_wd40',     label:'WD-40 300ml',                      unit:'un', qty:0, price:22.00},
+    {id:'cl_grx_litio',label:'Graxa de Lítio 500g',              unit:'un', qty:0, price:28.00},
+    {id:'cl_grx_ep2',  label:'Graxa EP2 500g',                   unit:'un', qty:0, price:32.00},
+    {id:'cl_desengrx', label:'Desengraxante 500ml spray',        unit:'un', qty:0, price:18.00},
+    {id:'cl_solvente', label:'Solvente / Thinner 1L',            unit:'un', qty:0, price:15.00},
+    {id:'cl_oleo_min', label:'Óleo Mineral lubrificante 1L',     unit:'un', qty:0, price:42.00},
+  ]},
+  { id:'cons_ved', title:'Vedação e Adesivos', icon:'🔒', items:[
+    {id:'cv_ptfe',     label:'Fita PTFE 18mm (rolo)',             unit:'un', qty:0, price:9.00},
+    {id:'cv_loctite243',label:'Loctite 243 trava-rosca médio',   unit:'un', qty:0, price:45.00},
+    {id:'cv_loctite572',label:'Loctite 572 veda-rosca',          unit:'un', qty:0, price:38.00},
+    {id:'cv_silicone',  label:'Silicone RTV neutro 280g',        unit:'un', qty:0, price:25.00},
+    {id:'cv_epoxi',     label:'Epóxi bicomponente (50ml)',        unit:'un', qty:0, price:65.00},
+    {id:'cv_anaero',    label:'Vedante Anaeróbico (50ml)',        unit:'un', qty:0, price:55.00},
+  ]},
+  { id:'cons_limp', title:'Limpeza e Proteção', icon:'🧹', items:[
+    {id:'climp_estopa',  label:'Estopa (kg)',                     unit:'kg', qty:0, price:12.00},
+    {id:'climp_escova',  label:'Escova de Aço (un)',              unit:'un', qty:0, price:8.50},
+    {id:'climp_pincel',  label:'Pincel demarcador',               unit:'un', qty:0, price:5.00},
+    {id:'climp_spray_az',label:'Tinta Spray azul / branco',      unit:'un', qty:0, price:18.00},
+    {id:'climp_luva_nit',label:'Luvas Nitrílicas (par)',          unit:'par',qty:0, price:3.50},
+    {id:'climp_pano',    label:'Pano de Limpeza (m²)',            unit:'m²', qty:0, price:4.00},
+  ]},
+  { id:'cons_util', title:'Utilidades de Obra', icon:'🔦', items:[
+    {id:'cu_silver',   label:'Silver Tape 50mm × 50m',           unit:'un', qty:0, price:18.00},
+    {id:'cu_marcador', label:'Marcador para Metal (caneta)',      unit:'un', qty:0, price:8.00},
+    {id:'cu_tag',      label:'Tags de Identificação (pct 50un)', unit:'pct',qty:0, price:12.00},
+    {id:'cu_pilhas',   label:'Pilhas AA (par)',                   unit:'par',qty:0, price:7.00},
+    {id:'cu_barbante', label:'Barbante / Cordão (m)',             unit:'m',  qty:0, price:0.50},
+    {id:'cu_saco_lixo',label:'Saco de Lixo industrial (un)',     unit:'un', qty:0, price:2.50},
+  ]},
+  { id:'cons_anti', title:'Antiengripantes e Lubrificantes Especiais', icon:'⭐', items:[
+    {id:'cae_antiseize_al',  label:'Anti-Seize alumínio Permatex 170g',  unit:'un', qty:0, price:85.00},
+    {id:'cae_antiseize_cu',  label:'Anti-Seize cobre Permatex 170g',     unit:'un', qty:0, price:95.00},
+    {id:'cae_loctite_lb',    label:'Loctite LB 8150 anti-griping 400ml', unit:'un', qty:0, price:220.00},
+    {id:'cae_grafite',       label:'Grafite seco spray 200ml',           unit:'un', qty:0, price:45.00},
+    {id:'cae_molybdenum',    label:'Pasta de Molibdênio 250g',           unit:'un', qty:0, price:120.00},
+  ]},
+  { id:'cons_end', title:'END – Ensaios Não Destrutivos', icon:'🔍', items:[
+    {id:'cend_kit_lp',    label:'Kit LP Metal-Chek completo (3 aerossóis)', unit:'kit', qty:0, price:250.00},
+    {id:'cend_penetrante',label:'Penetrante LP avulso (aerossol 300ml)',    unit:'un',  qty:0, price:70.00},
+    {id:'cend_revelador', label:'Revelador LP avulso (aerossol 300ml)',     unit:'un',  qty:0, price:70.00},
+    {id:'cend_removedor', label:'Removedor LP avulso (aerossol 300ml)',     unit:'un',  qty:0, price:65.00},
+    {id:'cend_filme',     label:'Filme Radiográfico (folha)',               unit:'un',  qty:0, price:0},
+  ]},
+  { id:'cons_flange', title:'Vedação de Flanges', icon:'🔁', items:[
+    {id:'cf_permatex',   label:'Elimina-Juntas Permatex Ultra (85ml)',     unit:'un', qty:0, price:85.00},
+    {id:'cf_formagask',  label:'Form-A-Gasket Permatex 2 (150ml)',         unit:'un', qty:0, price:92.00},
+    {id:'cf_ultra_copper',label:'Ultra Copper alta temp. Permatex (85ml)',unit:'un', qty:0, price:148.00},
+    {id:'cf_junta_esp',  label:'Junta Espirometálica (DN a cotar)',        unit:'un', qty:0, price:0},
+    {id:'cf_junta_ptfe', label:'Junta PTFE expandido (DN a cotar)',        unit:'un', qty:0, price:0},
+    {id:'cf_junta_rtj',  label:'Junta RTJ Ring-Type Joint (a cotar)',      unit:'un', qty:0, price:0},
+  ]},
+  { id:'cons_pos', title:'Pós-Serviço e Preservação', icon:'📦', items:[
+    {id:'cp_tampao_pl',   label:'Tampão de Flange plástico (par)',        unit:'par', qty:0, price:8.00},
+    {id:'cp_plugue_npt',  label:'Plugue NPT inox (un)',                   unit:'un',  qty:0, price:12.00},
+    {id:'cp_spray_pres',  label:'Spray preservador / anticorrosivo',      unit:'un',  qty:0, price:42.00},
+    {id:'cp_lacre',       label:'Lacres de segurança plástico (pct 20)',  unit:'pct', qty:0, price:15.00},
+    {id:'cp_plaqueta',    label:'Plaqueta de identificação inox',         unit:'un',  qty:0, price:5.00},
+    {id:'cp_saco_zip',    label:'Saco zip-lock para peças pequenas',      unit:'un',  qty:0, price:2.00},
+  ]},
+];
+
+// ═══════════════════════════════════════════════════════
+// BUILD
+// ═══════════════════════════════════════════════════════
+function buildSections() {
+  buildSectionList('sections-container', SECTIONS);
+  buildSectionList('consumiveis-container', CONSUMIVEIS);
+}
+
+function buildSectionList(containerId, list) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  list.forEach(sec => {
+    const isMO = !!sec.isMO;
+    // Layout responsivo: descrição flex, depois inputs com largura mínima garantida
+    const gridNormal = 'minmax(120px,2fr) 44px 80px 90px 90px';
+    const gridMO     = 'minmax(100px,2fr) 44px 55px 70px 85px 90px';
+    const grid = isMO ? gridMO : gridNormal;
+
+    const card = document.createElement('div');
+    card.className = 'section-card';
+    card.innerHTML = `
+      <div class="section-header" onclick="toggleSection(this)">
+        <h3><span class="sec-num">${sec.icon}</span> ${sec.title}</h3>
+        <div style="display:flex;gap:16px;align-items:center">
+          <span class="section-subtotal" id="sub-${sec.id}">R$ 0,00</span>
+          <span class="section-toggle">▼</span>
+        </div>
+      </div>
+      <div class="section-body" style="overflow-x:auto">
+        <div style="min-width:480px">
+          <div style="display:grid;grid-template-columns:${grid};gap:6px;padding:0 0 8px 0;border-bottom:1px solid var(--border2);margin-bottom:2px;align-items:center">
+            <span style="font-size:.68rem;text-transform:uppercase;letter-spacing:.8px;color:var(--text-dim);font-weight:600">Descrição</span>
+            <span style="font-size:.68rem;text-transform:uppercase;letter-spacing:.8px;color:var(--text-dim);font-weight:600;text-align:center">Un.</span>
+            ${isMO ? '<span style="font-size:.68rem;text-transform:uppercase;letter-spacing:.8px;color:#a78bfa;font-weight:600;text-align:center">Func.</span>' : ''}
+            <span style="font-size:.68rem;text-transform:uppercase;letter-spacing:.8px;color:var(--text-dim);font-weight:600;text-align:center">${isMO ? 'Horas' : 'Qtd.'}</span>
+            <span style="font-size:.68rem;text-transform:uppercase;letter-spacing:.8px;color:var(--amber);font-weight:600;text-align:right">${isMO ? 'R$/h' : 'R$/un'}</span>
+            <span style="font-size:.68rem;text-transform:uppercase;letter-spacing:.8px;color:var(--green-glow);font-weight:600;text-align:right">Total</span>
+          </div>
+          ${sec.items.map(item => `
+            <div style="display:grid;grid-template-columns:${grid};gap:6px;align-items:center;padding:6px 0;border-bottom:1px solid rgba(42,68,42,.3)">
+              <div style="font-size:.83rem;color:var(--text);line-height:1.3;padding-right:4px">${item.label}</div>
+              <div style="font-size:.7rem;color:var(--text-dim);text-align:center;white-space:nowrap">${item.unit}</div>
+              ${isMO ? `<input type="number" id="func-${item.id}" value="0" min="0" step="1"
+                style="background:var(--bg3);border:1px solid var(--border2);color:#a78bfa;border-radius:4px;padding:5px 4px;font-size:.82rem;width:100%;text-align:center"
+                oninput="calc();autoSave()" placeholder="0" title="Nº funcionários">` : ''}
+              <input type="number" id="qty-${item.id}" value="${item.qty}" min="0" step="1"
+                style="background:var(--bg3);border:1px solid var(--border2);color:#5bc8f5;border-radius:4px;padding:5px 4px;font-size:.82rem;width:100%;text-align:center"
+                oninput="calc();autoSave()" placeholder="0">
+              <input type="number" id="price-${item.id}" value="${item.price}" min="0" step="0.01"
+                style="background:var(--bg3);border:1px solid var(--border2);color:var(--amber);border-radius:4px;padding:5px 4px;font-size:.82rem;width:100%;text-align:right"
+                oninput="calc();autoSave()" placeholder="0,00">
+              <div id="total-${item.id}" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.88rem;color:var(--text-dim);text-align:right;white-space:nowrap">—</div>
+            </div>`).join('')}
+          ${isMO ? `<div style="margin-top:8px;font-size:.7rem;color:var(--text-dim);padding-top:6px;border-top:1px solid var(--border)">
+            <span style="color:#a78bfa">■</span> Func. × Horas × R$/h = Total</div>` : ''}
+        </div>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// AUTO CALC
+// ═══════════════════════════════════════════════════════
+function autoCalc() {
+  const func    = parseInt(document.getElementById('auto-func')?.value)    || 0;
+  const dias    = parseInt(document.getElementById('auto-dias')?.value)    || 0;
+  const horas   = parseFloat(document.getElementById('auto-horas')?.value) || 10;
+  const km      = parseFloat(document.getElementById('auto-km')?.value)    || 0;
+  const veiculo = document.getElementById('auto-veiculo')?.value           || '';
+  const moTipo  = document.getElementById('auto-mo-tipo')?.value           || 'mo_senior';
+
+  const chkCafe        = document.getElementById('chk-cafe')?.checked;
+  const chkAlmoco      = document.getElementById('chk-almoco')?.checked;
+  const chkJantar      = document.getElementById('chk-jantar')?.checked;
+  const chkHotel       = document.getElementById('chk-hotel')?.checked;
+  const chkLav         = document.getElementById('chk-lav')?.checked;
+  const chkMO          = document.getElementById('chk-mo')?.checked;
+  const chkEPI         = document.getElementById('chk-epi')?.checked;
+  const chkASO         = document.getElementById('chk-aso')?.checked;
+  const chkLixadeira   = document.getElementById('chk-lixadeira')?.checked;
+  const chkFerramentas = document.getElementById('chk-ferramentas')?.checked;
+
+  const preview = [];
+
+  if (func > 0 && dias > 0) {
+    const totalRefeicoes = func * dias;
+
+    // ── Alimentação
+    setQty('a_cafe',   chkCafe   ? totalRefeicoes : 0); if (chkCafe)   preview.push(`☕ Café: ${totalRefeicoes}x`);
+    setQty('a_almoco', chkAlmoco ? totalRefeicoes : 0); if (chkAlmoco) preview.push(`🍱 Almoço: ${totalRefeicoes}x`);
+    setQty('a_jantar', chkJantar ? totalRefeicoes : 0); if (chkJantar) preview.push(`🍽️ Jantar: ${totalRefeicoes}x`);
+    setQty('a_full', 0);
+
+    // ── Hospedagem
+    if (chkHotel) { setQty('h_hotel', totalRefeicoes); preview.push(`🏨 Hotel: ${totalRefeicoes} diárias`); }
+    else setQty('h_hotel', 0);
+
+    // ── Lavanderia
+    if (chkLav) {
+      const semanas = Math.ceil(dias / 7) * func;
+      setQty('lav1', semanas);
+      preview.push(`🧺 Lavanderia: ${semanas} semana(s)`);
+    } else setQty('lav1', 0);
+
+    // ── Mão de Obra — preenche func + horas na função selecionada
+    const moIds = ['mo_senior','mo_pleno','mo_eng','mo_soldador','mo_inspetor','mo_end','mo_psv','mo_aux'];
+    if (chkMO) {
+      const totalHoras = horas * dias;
+      moIds.forEach(id => {
+        const fEl = document.getElementById('func-'+id);
+        const qEl = document.getElementById('qty-'+id);
+        if (id === moTipo) {
+          if (fEl) fEl.value = func;
+          if (qEl) qEl.value = totalHoras;
+        } else {
+          // não zera outros que o usuário possa ter preenchido manualmente
+        }
+      });
+      preview.push(`👷 MO (${moTipo.replace('mo_','')}): ${func} func × ${totalHoras}h`);
+    }
+
+    // ── EPI Básico — 1 kit por funcionário
+    if (chkEPI) { setQty('s_epi_basico', func); preview.push(`🦺 EPI: ${func} kit(s)`); }
+    else setQty('s_epi_basico', 0);
+
+    // ── ASO — 1 por funcionário
+    if (chkASO) { setQty('s_aso', func); preview.push(`📋 ASO: ${func} un`); }
+    else setQty('s_aso', 0);
+
+    // ── Lixadeira — 1 por equipe × dias
+    if (chkLixadeira) { setQty('eq_lixadeira', dias); preview.push(`🔧 Lixadeira: ${dias} diárias`); }
+    else setQty('eq_lixadeira', 0);
+
+    // ── Caixa de ferramentas — 1 por funcionário × dias
+    if (chkFerramentas) { setQty('eq_ferramentas', func * dias); preview.push(`🧰 Ferramentas: ${func*dias} diárias`); }
+    else setQty('eq_ferramentas', 0);
+  }
+
+  // ── KM — ida+volta × dias × funcionários
+  if (km > 0 && dias > 0 && veiculo && func > 0) {
+    const kmTotal = km * 2 * dias * func;
+    ['v_carro','v_empresa','v_moto'].forEach(id => setQty(id, 0));
+    setQty(veiculo, kmTotal);
+    const labels = {v_carro:'Carro Próprio', v_empresa:'Carro Empresa', v_moto:'Moto'};
+    preview.push(`🚗 ${labels[veiculo]}: ${kmTotal} km`);
+  }
+
+  const previewEl = document.getElementById('auto-preview');
+  document.getElementById('auto-preview-items').innerHTML = preview.map(p =>
+    `<span style="background:rgba(126,217,87,.1);border:1px solid rgba(126,217,87,.25);border-radius:4px;padding:4px 10px;font-size:.8rem;color:var(--accent)">${p}</span>`).join('');
+  previewEl.style.display = (preview.length > 0 && func > 0 && dias > 0) ? 'block' : 'none';
+  calc();
+  autoSave();
+}
+
+function setQty(id, val) {
+  const el = document.getElementById('qty-'+id);
+  if (el) el.value = val;
+}
+
+// ═══════════════════════════════════════════════════════
+// CALC
+// ═══════════════════════════════════════════════════════
+function calc() {
+  const allSections = [...SECTIONS, ...CONSUMIVEIS];
+  const sectionTotals = {};
+  let CD = 0;
+
+  allSections.forEach(sec => {
+    let secTotal = 0;
+    sec.items.forEach(item => {
+      const qty   = parseFloat(document.getElementById('qty-'+item.id)?.value)   || 0;
+      const price = parseFloat(document.getElementById('price-'+item.id)?.value) || 0;
+      const func  = sec.isMO ? (parseFloat(document.getElementById('func-'+item.id)?.value) || 0) : 1;
+      const total = func * qty * price;
+      secTotal += total;
+      const el = document.getElementById('total-'+item.id);
+      if (el) {
+        el.textContent = total > 0 ? fmtBRL(total) : '—';
+        el.style.color = total > 0 ? 'var(--green-glow)' : 'var(--text-dim)';
+      }
+    });
+    sectionTotals[sec.id] = secTotal;
+    CD += secTotal;
+    const subEl = document.getElementById('sub-'+sec.id);
+    if (subEl) subEl.textContent = fmtBRL(secTotal);
+  });
+
+  const pctOverhead = (parseFloat(document.getElementById('pct-overhead')?.value) || 0)/100;
+  const pctRiscos   = (parseFloat(document.getElementById('pct-riscos')?.value)   || 0)/100;
+  const pctImpostos = (parseFloat(document.getElementById('pct-impostos')?.value) || 0)/100;
+  const pctSeguros  = (parseFloat(document.getElementById('pct-seguros')?.value)  || 0)/100;
+  const pctLucro    = (parseFloat(document.getElementById('pct-lucro')?.value)    || 0)/100;
+
+  const valOverhead = CD * pctOverhead;
+  const valRiscos   = CD * pctRiscos;
+  const custoBase   = CD + valOverhead + valRiscos;
+  const divisor     = 1 - pctImpostos - pctSeguros - pctLucro;
+  const PV = divisor > 0 ? custoBase / divisor : 0;
+  const valImpostos = PV * pctImpostos;
+  const valSeguros  = PV * pctSeguros;
+  const valLucro    = PV * pctLucro;
+  const totalBDI    = PV - CD;
+  const qtd = parseInt(document.getElementById('qtd-valvulas')?.value) || 1;
+
+  setVal('val-overhead', valOverhead); setVal('val-riscos', valRiscos);
+  setVal('val-impostos', valImpostos); setVal('val-seguros', valSeguros);
+  setVal('val-lucro', valLucro);       setVal('bdi-total-header', totalBDI);
+  updateResumo(sectionTotals, CD, valOverhead, valRiscos, valImpostos, valSeguros, valLucro, PV, PV/qtd, qtd);
+}
+
+function setVal(id, val) { const el=document.getElementById(id); if(el) el.textContent=fmtBRL(val); }
+
+function updateResumo(sections, CD, overhead, riscos, impostos, seguros, lucro, PV, pvUnit, qtd) {
+  document.getElementById('preco-final-hero').textContent = fmtBRL(PV);
+  document.getElementById('preco-unit-hero').textContent  = fmtBRL(pvUnit)+' / unidade';
+  document.getElementById('qty-info-hero').textContent    = `${qtd} válvula${qtd>1?'s':''} · Custo direto: ${fmtBRL(CD)}`;
+
+  const table = document.getElementById('resumo-table');
+  if (table) {
+    const allSecs = [...SECTIONS, ...CONSUMIVEIS];
+    const rows = allSecs.map(sec => {
+      const val = sections[sec.id]||0;
+      const pct = CD>0?(val/CD*100).toFixed(1):'0.0';
+      return `<tr><td>${sec.icon} ${sec.title}</td><td>${fmtBRL(val)} <span class="pct">${pct}%</span></td></tr>`;
+    });
+    rows.push(`<tr class="total-row"><td>CUSTO DIRETO TOTAL</td><td>${fmtBRL(CD)}</td></tr>`);
+    table.innerHTML = rows.join('');
+  }
+
+  const bars = document.getElementById('bdi-bars');
+  if (bars) {
+    const items = [
+      {label:'Overhead / Adm.',    val:overhead},
+      {label:'Riscos',             val:riscos},
+      {label:'Impostos',           val:impostos},
+      {label:'Seguros',            val:seguros},
+      {label:'Margem de Lucro',    val:lucro},
+    ];
+    const maxV = Math.max(...items.map(i=>i.val),1);
+    bars.innerHTML = items.map(item => {
+      const pct=(item.val/PV*100).toFixed(1), barW=(item.val/maxV*100).toFixed(1);
+      return `<div class="bdi-bar-row">
+        <div class="bdi-bar-label">${item.label} <span style="color:var(--text-dim);font-size:.72rem">(${pct}%)</span></div>
+        <div class="bdi-bar-track"><div class="bdi-bar-fill" style="width:${barW}%"></div></div>
+        <div class="bdi-bar-val">${fmtBRL(item.val)}</div></div>`;
+    }).join('');
+  }
+
+  const rc = document.getElementById('resumo-cliente');
+  if (rc) {
+    const fields = [['Cliente','cliente'],['CNPJ/CPF','cnpj'],['Contato','contato'],['Telefone','telefone'],['Local','local'],['Prazo','prazo'],['Validade','validade'],['Nº Orçamento','num-orc']];
+    rc.innerHTML = fields.map(([label,id]) => {
+      const val = document.getElementById(id)?.value||'—';
+      return `<div class="form-group"><label>${label}</label><div style="padding:10px 0;font-size:.9rem;color:var(--text);border-bottom:1px solid var(--border)">${val}</div></div>`;
+    }).join('');
+    const desc = document.getElementById('descricao')?.value||'—';
+    const obs  = document.getElementById('obs')?.value||'—';
+    rc.innerHTML += `<div class="form-group full"><label>Descrição</label><div style="padding:10px 0;font-size:.9rem;color:var(--text);border-bottom:1px solid var(--border);white-space:pre-wrap">${desc}</div></div>`;
+    rc.innerHTML += `<div class="form-group full"><label>Observações / Cond. Pagamento</label><div style="padding:10px 0;font-size:.9rem;color:var(--text);border-bottom:1px solid var(--border);white-space:pre-wrap">${obs}</div></div>`;
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// SAVE / LOAD
+// ═══════════════════════════════════════════════════════
+let saveTimer;
+function autoSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveLocal, 1200);
+}
+
+function saveLocal() {
+  try {
+    const data = {};
+    const allSections = [...SECTIONS, ...CONSUMIVEIS];
+    allSections.forEach(sec => {
+      sec.items.forEach(item => {
+        data['qty-'+item.id]   = document.getElementById('qty-'+item.id)?.value   || '0';
+        data['price-'+item.id] = document.getElementById('price-'+item.id)?.value || '0';
+        if (sec.isMO) data['func-'+item.id] = document.getElementById('func-'+item.id)?.value || '0';
+      });
+    });
+    ['cliente','cnpj','contato','telefone','local','descricao','obs','prazo','validade','num-orc','qtd-valvulas',
+     'pct-overhead','pct-riscos','pct-impostos','pct-seguros','pct-lucro',
+     'auto-func','auto-dias','auto-horas','auto-km','auto-veiculo','auto-mo-tipo'].forEach(id => {
+       data[id] = document.getElementById(id)?.value || '';
+    });
+    ['chk-cafe','chk-almoco','chk-jantar','chk-hotel','chk-lav','chk-mo','chk-epi','chk-aso','chk-lixadeira','chk-ferramentas'].forEach(id => {
+      data[id] = document.getElementById(id)?.checked ? '1' : '0';
+    });
+    localStorage.setItem('new_valvulas_orc', JSON.stringify(data));
+    const badge = document.getElementById('save-badge');
+    badge.style.display = 'block';
+    badge.textContent = '✓ Salvo ' + new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    setTimeout(() => badge.style.display = 'none', 3000);
+  } catch(e) { console.warn('Save error', e); }
+}
+
+function loadLocal() {
+  try {
+    const raw = localStorage.getItem('new_valvulas_orc');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    const allSections = [...SECTIONS, ...CONSUMIVEIS];
+    allSections.forEach(sec => {
+      sec.items.forEach(item => {
+        const qEl = document.getElementById('qty-'+item.id);
+        const pEl = document.getElementById('price-'+item.id);
+        const fEl = document.getElementById('func-'+item.id);
+        if (qEl && data['qty-'+item.id] !== undefined) qEl.value = data['qty-'+item.id];
+        if (pEl && data['price-'+item.id] !== undefined) pEl.value = data['price-'+item.id];
+        if (fEl && data['func-'+item.id] !== undefined) fEl.value = data['func-'+item.id];
+      });
+    });
+    ['cliente','cnpj','contato','telefone','local','descricao','obs','prazo','validade','num-orc','qtd-valvulas',
+     'pct-overhead','pct-riscos','pct-impostos','pct-seguros','pct-lucro',
+     'auto-func','auto-dias','auto-horas','auto-km','auto-veiculo','auto-mo-tipo'].forEach(id => {
+       const el = document.getElementById(id);
+       if (el && data[id] !== undefined) el.value = data[id];
+    });
+    ['chk-cafe','chk-almoco','chk-jantar','chk-hotel','chk-lav','chk-mo','chk-epi','chk-aso','chk-lixadeira','chk-ferramentas'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el && data[id] !== undefined) el.checked = data[id] === '1';
+    });
+    toast('Orçamento restaurado!');
+    calc();
+  } catch(e) { console.warn('Load error', e); }
+}
+
+// ═══════════════════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════════════════
+function goStep(n) {
+  document.querySelectorAll('.panel').forEach((p,i) => p.classList.toggle('active', i===n));
+  document.querySelectorAll('.step').forEach((s,i) => {
+    s.classList.toggle('active', i===n);
+    s.classList.toggle('done', i<n);
+    s.querySelector('.step-num').textContent = i<n ? '✓' : i+1;
+  });
+  if (n===4) calc();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleSection(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('collapsed');
+  header.querySelector('.section-toggle').textContent = body.classList.contains('collapsed') ? '▶' : '▼';
+}
+
+// ═══════════════════════════════════════════════════════
+// RESET
+// ═══════════════════════════════════════════════════════
+function resetAll() {
+  if (!confirm('Limpar todos os dados do orçamento?')) return;
+  localStorage.removeItem('new_valvulas_orc');
+  [...SECTIONS,...CONSUMIVEIS].forEach(sec => {
+    sec.items.forEach(item => {
+      const qEl=document.getElementById('qty-'+item.id);
+      const pEl=document.getElementById('price-'+item.id);
+      const fEl=document.getElementById('func-'+item.id);
+      if(qEl) qEl.value=item.qty;
+      if(pEl) pEl.value=item.price;
+      if(fEl) fEl.value=0;
+    });
+  });
+  ['auto-func','auto-dias','auto-km'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  const horasEl=document.getElementById('auto-horas'); if(horasEl) horasEl.value=10;
+  document.getElementById('auto-veiculo').value='';
+  document.getElementById('auto-mo-tipo').value='mo_senior';
+  ['chk-cafe','chk-almoco','chk-jantar','chk-hotel','chk-lav','chk-mo','chk-epi','chk-aso','chk-lixadeira','chk-ferramentas'].forEach(id => { const el=document.getElementById(id); if(el) el.checked=true; });
+  document.getElementById('auto-preview').style.display='none';
+  ['cliente','cnpj','contato','telefone','local','descricao','obs','prazo','validade','num-orc'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('qtd-valvulas').value=1;
+  calc(); goStep(0); toast('Orçamento limpo.');
+}
+
+// ═══════════════════════════════════════════════════════
+// PDF
+// ═══════════════════════════════════════════════════════
+async function exportPDF() {
+  toast('Gerando PDF...');
+  try {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({unit:'mm', format:'a4'});
+    const W=210, M=14;
+    let y=0;
+    const GD=[26,58,26], GM=[45,122,45], GL=[126,217,87], WH=[255,255,255];
+    const GR=[240,248,240], GRM=[200,220,200], TD=[30,50,30];
+
+    function newPage() {
+      doc.addPage();
+      y=14;
+      doc.setFillColor(...GD); doc.rect(0,0,W,8,'F');
+      doc.setTextColor(...GL); doc.setFont('helvetica','bold'); doc.setFontSize(7);
+      doc.text('NEW Válvulas e Equip. Industriais', M, 5.5);
+      doc.text(numOrc, W-M, 5.5, {align:'right'});
+    }
+
+    function checkY(needed) { if (y+needed > 275) newPage(); }
+
+    // HEADER
+    doc.setFillColor(...GD); doc.rect(0,0,W,38,'F');
+    doc.setFillColor(...GM); doc.rect(0,34,W,2,'F');
+    doc.setTextColor(...GL); doc.setFont('helvetica','bold'); doc.setFontSize(22);
+    doc.text('NEW', M, 18);
+    doc.setFontSize(9); doc.setTextColor(180,220,180);
+    doc.text('VÁLVULAS E EQUIP. INDUSTRIAIS', M, 24);
+    doc.setFontSize(8); doc.setTextColor(120,160,120);
+    doc.text('ORÇAMENTO DE SERVIÇOS DE CAMPO', M, 30);
+
+    const numOrc = document.getElementById('num-orc')?.value || 'ORC-2026-001';
+    const today  = new Date().toLocaleDateString('pt-BR');
+    doc.setTextColor(...GL); doc.setFontSize(10);
+    doc.text(numOrc, W-M, 18, {align:'right'});
+    doc.setFontSize(8); doc.setTextColor(150,190,150);
+    doc.text(`Emitido em: ${today}`, W-M, 24, {align:'right'});
+    y=44;
+
+    // CLIENTE
+    doc.setFillColor(...GR); doc.rect(M,y,W-2*M,30,'F');
+    doc.setDrawColor(...GRM); doc.rect(M,y,W-2*M,30);
+    doc.setTextColor(...GD); doc.setFont('helvetica','bold'); doc.setFontSize(8);
+    doc.text('DADOS DO CLIENTE', M+3, y+6);
+    const cfields = [
+      ['Cliente', document.getElementById('cliente')?.value],
+      ['CNPJ/CPF', document.getElementById('cnpj')?.value],
+      ['Contato', document.getElementById('contato')?.value],
+      ['Tel/Email', document.getElementById('telefone')?.value],
+      ['Local', document.getElementById('local')?.value],
+      ['Prazo / Validade', (document.getElementById('prazo')?.value||'')+ ' / '+(document.getElementById('validade')?.value||'')],
+    ];
+    doc.setFont('helvetica','normal'); doc.setFontSize(7.5); doc.setTextColor(...TD);
+    const half = 3;
+    cfields.forEach(([label,val],i) => {
+      const col=i<half?0:1, row=i<half?i:i-half;
+      const x=M+3+col*93, yy=y+13+row*7;
+      doc.setFont('helvetica','bold'); doc.text(label+':', x, yy);
+      doc.setFont('helvetica','normal'); doc.text((val||'—').substring(0,38), x+22, yy);
+    });
+    y+=34;
+
+    // DESCRIÇÃO
+    const desc = document.getElementById('descricao')?.value||'';
+    const obs  = document.getElementById('obs')?.value||'';
+    if (desc) {
+      doc.setFillColor(245,252,245); doc.rect(M,y,W-2*M,14,'F');
+      doc.setDrawColor(...GRM); doc.rect(M,y,W-2*M,14);
+      doc.setFont('helvetica','bold'); doc.setFontSize(7.5); doc.setTextColor(...GD);
+      doc.text('DESCRIÇÃO DO SERVIÇO', M+3, y+5.5);
+      doc.setFont('helvetica','normal'); doc.setTextColor(...TD);
+      const dlines = doc.splitTextToSize(desc, W-2*M-8);
+      doc.text(dlines.slice(0,2).join('\n'), M+3, y+10.5);
+      y+=18;
+    }
+
+    // ── ITENS DETALHADOS ──
+    const allSecs = [...SECTIONS, ...CONSUMIVEIS];
+    y+=3;
+    doc.setFillColor(...GD); doc.rect(M,y,W-2*M,7,'F');
+    doc.setTextColor(...WH); doc.setFont('helvetica','bold'); doc.setFontSize(8);
+    doc.text('DETALHAMENTO DE CUSTOS', M+3, y+5); y+=9;
+
+    let CD=0;
+    allSecs.forEach((sec,si) => {
+      let secTotal=0;
+      const activeItems=[];
+      sec.items.forEach(item => {
+        const qty   = parseFloat(document.getElementById('qty-'+item.id)?.value)   || 0;
+        const price = parseFloat(document.getElementById('price-'+item.id)?.value) || 0;
+        const func  = sec.isMO ? (parseFloat(document.getElementById('func-'+item.id)?.value)||0) : 1;
+        const total = func*qty*price;
+        if (total>0) activeItems.push({...item, qty, price, func, total});
+        secTotal+=total;
+      });
+      CD+=secTotal;
+      if (secTotal===0) return; // pula seções zeradas
+
+      checkY(10+activeItems.length*5.5);
+
+      // Header da seção
+      doc.setFillColor(si%2===0?35:40, si%2===0?65:70, si%2===0?35:40);
+      doc.rect(M,y,W-2*M,6.5,'F');
+      doc.setTextColor(...GL); doc.setFont('helvetica','bold'); doc.setFontSize(7.5);
+      doc.text(`${sec.icon} ${sec.title}`, M+3, y+4.5);
+      doc.text(fmtBRL(secTotal), W-M-3, y+4.5, {align:'right'});
+      y+=7;
+
+      // Cabeçalho de colunas
+      doc.setFillColor(245,252,245); doc.rect(M,y,W-2*M,5,'F');
+      doc.setTextColor(80,120,80); doc.setFont('helvetica','bold'); doc.setFontSize(6.5);
+      doc.text('Descrição', M+3, y+3.5);
+      if (sec.isMO) { doc.text('Func.', M+110, y+3.5, {align:'right'}); doc.text('Horas', M+130, y+3.5, {align:'right'}); }
+      else doc.text('Qtd.', M+120, y+3.5, {align:'right'});
+      doc.text('Vlr.Unit.', W-M-30, y+3.5, {align:'right'});
+      doc.text('Total', W-M-3, y+3.5, {align:'right'});
+      y+=5.5;
+
+      // Itens
+      activeItems.forEach((item,idx) => {
+        checkY(5.5);
+        doc.setFillColor(idx%2===0?250:255, idx%2===0?255:255, idx%2===0?250:255);
+        doc.rect(M,y,W-2*M,5,'F');
+        doc.setTextColor(...TD); doc.setFont('helvetica','normal'); doc.setFontSize(7);
+        doc.text(item.label.substring(0,55), M+3, y+3.5);
+        if (sec.isMO) {
+          doc.text(String(item.func), M+110, y+3.5, {align:'right'});
+          doc.text(String(item.qty), M+130, y+3.5, {align:'right'});
+        } else {
+          doc.text(String(item.qty), M+120, y+3.5, {align:'right'});
+        }
+        doc.text(fmtBRL(item.price), W-M-30, y+3.5, {align:'right'});
+        doc.setFont('helvetica','bold');
+        doc.text(fmtBRL(item.total), W-M-3, y+3.5, {align:'right'});
+        y+=5;
+      });
+      y+=3;
+    });
+
+    // CUSTO DIRETO
+    checkY(12);
+    doc.setFillColor(...GM); doc.rect(M,y,W-2*M,8,'F');
+    doc.setTextColor(...WH); doc.setFont('helvetica','bold'); doc.setFontSize(9);
+    doc.text('CUSTO DIRETO TOTAL', M+3, y+5.5);
+    doc.text(fmtBRL(CD), W-M-3, y+5.5, {align:'right'});
+    y+=12;
+
+    // BDI
+    const pctO=(parseFloat(document.getElementById('pct-overhead')?.value)||0)/100;
+    const pctR=(parseFloat(document.getElementById('pct-riscos')?.value)||0)/100;
+    const pctI=(parseFloat(document.getElementById('pct-impostos')?.value)||0)/100;
+    const pctS=(parseFloat(document.getElementById('pct-seguros')?.value)||0)/100;
+    const pctL=(parseFloat(document.getElementById('pct-lucro')?.value)||0)/100;
+    const vO=CD*pctO, vR=CD*pctR, cBase=CD+vO+vR;
+    const div=1-pctI-pctS-pctL;
+    const PV=div>0?cBase/div:0;
+    const vI=PV*pctI, vS=PV*pctS, vL=PV*pctL;
+    const qtd=parseInt(document.getElementById('qtd-valvulas')?.value)||1;
+
+    checkY(50);
+    doc.setFillColor(...GD); doc.rect(M,y,W-2*M,7,'F');
+    doc.setTextColor(...WH); doc.setFont('helvetica','bold'); doc.setFontSize(8);
+    doc.text('BDI – COMPOSIÇÃO DO PREÇO DE VENDA', M+3, y+5); y+=9;
+
+    const bdiRows=[
+      ['Overhead/Adm. (sobre CD)', vO, pctO],
+      ['Riscos e Imprevistos (sobre CD)', vR, pctR],
+      ['Impostos ISS+PIS+COFINS+CSLL (sobre PV)', vI, pctI],
+      ['Seguros e Garantias (sobre PV)', vS, pctS],
+      ['Margem de Lucro (sobre PV)', vL, pctL],
+    ];
+    bdiRows.forEach(([label,val,pct],i) => {
+      doc.setFillColor(i%2===0?245:252,i%2===0?252:255,i%2===0?245:252);
+      doc.rect(M,y,W-2*M,6,'F');
+      doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(...TD);
+      doc.text(label, M+3, y+4.5);
+      doc.text(`${(pct*100).toFixed(1)}%`, W-M-30, y+4.5, {align:'right'});
+      doc.setFont('helvetica','bold');
+      doc.text(fmtBRL(val), W-M-3, y+4.5, {align:'right'});
+      y+=6;
+    });
+
+    // PREÇO FINAL
+    y+=5; checkY(24);
+    doc.setFillColor(...GD); doc.rect(M,y,W-2*M,22,'F');
+    doc.setFillColor(...GM); doc.rect(M,y,3,22,'F');
+    doc.setTextColor(...GL); doc.setFont('helvetica','bold'); doc.setFontSize(10);
+    doc.text('★  PREÇO FINAL DE VENDA', M+7, y+8);
+    doc.setFontSize(17); doc.text(fmtBRL(PV), W-M-4, y+10, {align:'right'});
+    doc.setFontSize(9); doc.setTextColor(180,220,180);
+    doc.text(`${qtd} unidade${qtd>1?'s':''} · ${fmtBRL(PV/qtd)} por unidade`, M+7, y+17);
+    y+=27;
+
+    // OBSERVAÇÕES
+    if (obs) {
+      checkY(20);
+      doc.setFillColor(245,252,245); doc.rect(M,y,W-2*M,16,'F');
+      doc.setDrawColor(...GRM); doc.rect(M,y,W-2*M,16);
+      doc.setFont('helvetica','bold'); doc.setFontSize(7.5); doc.setTextColor(...GD);
+      doc.text('OBSERVAÇÕES / CONDIÇÕES DE PAGAMENTO', M+3, y+5.5);
+      doc.setFont('helvetica','normal'); doc.setTextColor(...TD);
+      const olines = doc.splitTextToSize(obs, W-2*M-8);
+      doc.text(olines.slice(0,3).join('\n'), M+3, y+11);
+      y+=20;
+    }
+
+    // RODAPÉ em todas as páginas
+    const totalPages = doc.getNumberOfPages();
+    for (let p=1; p<=totalPages; p++) {
+      doc.setPage(p);
+      doc.setFontSize(7); doc.setTextColor(150,150,150); doc.setFont('helvetica','normal');
+      doc.text('NEW Válvulas e Equip. Industriais  ·  Sujeito a confirmação técnica', W/2, 290, {align:'center'});
+      doc.text(`Pág. ${p}/${totalPages}`, W-M, 290, {align:'right'});
+    }
+
+    doc.save(`Orcamento_NEW_${numOrc}_${today.replace(/\//g,'-')}.pdf`);
+    toast('PDF exportado com sucesso!');
+  } catch(e) {
+    console.error(e);
+    toast('Erro ao gerar PDF.');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════
+function fmtBRL(v) { return 'R$ '+(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function toast(msg) {
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2800);
+}
+
+// ═══════════════════════════════════════════════════════
+// START
+// ═══════════════════════════════════════════════════════
+function init() {
+  buildSections();
+  loadLocal();
+  calc();
+  // Registra Service Worker para PWA
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  }
+}
+init();
+</script>
+</body>
+</html>
