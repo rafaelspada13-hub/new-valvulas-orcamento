@@ -149,6 +149,57 @@ input.func-input{color:#a78bfa;}
 @media(max-width:600px){
   .app{padding:1rem;}.header-title{display:none;}
 }
+
+/* ── CATÁLOGO ── */
+#view-catalogo{display:none;}
+#view-orcamento{display:block;}
+.cat-hero{background:linear-gradient(135deg,var(--green-dark) 0%,#081208 100%);border-bottom:2px solid var(--green-mid);
+  padding:2.5rem 2rem;text-align:center;position:relative;overflow:hidden;}
+.cat-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(61,166,61,.18) 0%,transparent 60%);}
+.cat-hero h1{font-family:'Barlow Condensed',sans-serif;font-size:2.4rem;font-weight:800;color:var(--accent);letter-spacing:2px;position:relative;}
+.cat-hero p{color:var(--text-muted);font-size:.95rem;margin-top:.5rem;position:relative;}
+.cat-filter-bar{display:flex;flex-wrap:wrap;gap:8px;padding:1.2rem 0;max-width:1400px;margin:0 auto;}
+.cat-filter-btn{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  padding:7px 16px;border-radius:20px;border:1px solid var(--border2);background:var(--card);color:var(--text-muted);cursor:pointer;transition:all .2s;}
+.cat-filter-btn:hover,.cat-filter-btn.active{background:var(--green-mid);color:#fff;border-color:var(--green-mid);}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.2rem;max-width:1400px;margin:0 auto;padding-bottom:3rem;}
+.prod-card{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;
+  display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;}
+.prod-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.5),0 0 0 1px var(--green-mid);}
+.prod-card-icon{background:linear-gradient(135deg,var(--green-dark),#0a180a);
+  height:120px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;
+  border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.prod-card-icon::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(61,166,61,.12) 0%,transparent 70%);}
+.prod-card-badge{position:absolute;top:10px;right:10px;background:var(--green-mid);color:#fff;
+  font-family:'Barlow Condensed',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;padding:3px 8px;border-radius:4px;}
+.prod-card-body{padding:16px;flex:1;display:flex;flex-direction:column;gap:8px;}
+.prod-card-tag{font-size:.65rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-dim);font-weight:600;}
+.prod-card-title{font-family:'Barlow Condensed',sans-serif;font-size:1.15rem;font-weight:700;color:var(--text);line-height:1.2;}
+.prod-card-desc{font-size:.8rem;color:var(--text-muted);line-height:1.5;flex:1;}
+.prod-specs{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;}
+.prod-spec-tag{background:rgba(61,166,61,.1);border:1px solid rgba(61,166,61,.2);color:var(--accent);
+  font-size:.68rem;padding:3px 8px;border-radius:4px;font-weight:600;}
+.prod-card-footer{padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:8px;}
+.btn-wpp{flex:1;background:linear-gradient(135deg,#25d366,#128c3e);color:#fff;border:none;
+  border-radius:7px;padding:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.85rem;
+  letter-spacing:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;
+  text-decoration:none;transition:filter .2s;}
+.btn-wpp:hover{filter:brightness(1.1);}
+.btn-orc{background:transparent;color:var(--accent);border:1px solid var(--green-mid);
+  border-radius:7px;padding:10px 12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.8rem;
+  letter-spacing:1px;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.btn-orc:hover{background:var(--green-dark);}
+.cat-section-title{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:3px;color:var(--text-dim);
+  max-width:1400px;margin:1.5rem auto .6rem;padding:0 0 8px;border-bottom:1px solid var(--border);}
+.parceiro-banner{max-width:1400px;margin:1.5rem auto;background:linear-gradient(135deg,#1a2e10,#0d1a08);
+  border:1px solid var(--green-mid);border-radius:10px;padding:20px 24px;
+  display:flex;align-items:center;gap:20px;}
+.parceiro-banner .pb-icon{font-size:2.5rem;flex-shrink:0;}
+.parceiro-banner h3{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);}
+.parceiro-banner p{font-size:.82rem;color:var(--text-muted);margin-top:4px;}
+@media(max-width:600px){.cat-grid{grid-template-columns:1fr;}.parceiro-banner{flex-direction:column;text-align:center;}}
 </style>
 </head>
 <body>
@@ -156,24 +207,323 @@ input.func-input{color:#a78bfa;}
 <header>
   <div class="header-inner">
     <div class="logo-area">
-      <div class="logo-box">🔧</div>
-      <div class="logo-text">
-        <div class="brand">NEW</div>
-        <div class="sub">Válvulas e Equip. Industriais</div>
-      </div>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 80" height="56" style="display:block">
+        <!-- Triângulo / seta estilizada -->
+        <polygon points="38,70 4,70 38,14 72,70 58,70 38,40 18,70" fill="#2d2d2d"/>
+        <!-- Corte do topo (seta para cima) -->
+        <polygon points="38,6 32,18 44,18" fill="#2d2d2d"/>
+        <!-- Válvula: corpo -->
+        <rect x="28" y="50" width="20" height="14" rx="2" fill="#2d2d2d"/>
+        <!-- Válvula: flange inferior -->
+        <rect x="24" y="62" width="28" height="4" rx="1" fill="#2d2d2d"/>
+        <!-- Válvula: haste -->
+        <rect x="36" y="40" width="4" height="12" fill="#2d2d2d"/>
+        <!-- Válvula: volante (handwheel) -->
+        <circle cx="38" cy="38" r="8" fill="none" stroke="#2d2d2d" stroke-width="2.5"/>
+        <line x1="38" y1="30" x2="38" y2="46" stroke="#2d2d2d" stroke-width="1.5"/>
+        <line x1="30" y1="38" x2="46" y2="38" stroke="#2d2d2d" stroke-width="1.5"/>
+        <line x1="32.5" y1="32.5" x2="43.5" y2="43.5" stroke="#2d2d2d" stroke-width="1"/>
+        <line x1="43.5" y1="32.5" x2="32.5" y2="43.5" stroke="#2d2d2d" stroke-width="1"/>
+        <!-- Texto NEW -->
+        <text x="82" y="48" font-family="'Barlow Condensed',Arial Black,sans-serif" font-weight="900" font-size="38" fill="#1a5c1e" letter-spacing="1">NEW</text>
+        <!-- Barra escura com subtítulo -->
+        <rect x="82" y="52" width="132" height="18" rx="2" fill="#2d2d2d"/>
+        <text x="148" y="64" font-family="'Barlow Condensed',Arial,sans-serif" font-weight="600" font-size="10" fill="#ffffff" text-anchor="middle" letter-spacing="1">VÁLVULAS E EQUIP. INDUSTRIAIS</text>
+      </svg>
     </div>
     <div class="header-title">Gerador de Orçamento</div>
     <div class="header-actions">
-      <button class="btn btn-ghost" onclick="resetAll()">↺ Limpar</button>
-      <button class="btn btn-ghost" onclick="saveLocal()" style="color:var(--accent);border-color:var(--green-mid)">💾 Salvar</button>
-      <button class="btn btn-primary" onclick="exportPDF()">⬇ PDF</button>
+      <button class="btn btn-ghost" id="nav-catalogo" onclick="showView('catalogo')" style="color:var(--accent);border-color:var(--green-mid)">📦 Catálogo</button>
+      <button class="btn btn-ghost" id="nav-orcamento" onclick="showView('orcamento')">🧾 Orçamento</button>
+      <button class="btn btn-ghost" id="btn-limpar" onclick="resetAll()">↺ Limpar</button>
+      <button class="btn btn-ghost" id="btn-salvar" onclick="saveLocal()" style="color:var(--accent);border-color:var(--green-mid)">💾 Salvar</button>
+      <button class="btn btn-primary" id="btn-pdf" onclick="exportPDF()">⬇ PDF</button>
     </div>
   </div>
 </header>
 
 <div class="save-badge" id="save-badge" style="display:none">✓ Salvo</div>
 
-<div class="app">
+<!-- ═══════════════════ CATÁLOGO ═══════════════════ -->
+<div id="view-catalogo">
+  <div class="cat-hero">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 80" height="70" style="display:block;margin:0 auto 12px">
+      <polygon points="38,70 4,70 38,14 72,70 58,70 38,40 18,70" fill="#3d3d3d"/>
+      <polygon points="38,6 32,18 44,18" fill="#3d3d3d"/>
+      <rect x="28" y="50" width="20" height="14" rx="2" fill="#3d3d3d"/>
+      <rect x="24" y="62" width="28" height="4" rx="1" fill="#3d3d3d"/>
+      <rect x="36" y="40" width="4" height="12" fill="#3d3d3d"/>
+      <circle cx="38" cy="38" r="8" fill="none" stroke="#3d3d3d" stroke-width="2.5"/>
+      <line x1="38" y1="30" x2="38" y2="46" stroke="#3d3d3d" stroke-width="1.5"/>
+      <line x1="30" y1="38" x2="46" y2="38" stroke="#3d3d3d" stroke-width="1.5"/>
+      <line x1="32.5" y1="32.5" x2="43.5" y2="43.5" stroke="#3d3d3d" stroke-width="1"/>
+      <line x1="43.5" y1="32.5" x2="32.5" y2="43.5" stroke="#3d3d3d" stroke-width="1"/>
+      <text x="82" y="48" font-family="'Barlow Condensed',Arial Black,sans-serif" font-weight="900" font-size="38" fill="#7ed957" letter-spacing="1">NEW</text>
+      <rect x="82" y="52" width="132" height="18" rx="2" fill="#3d3d3d"/>
+      <text x="148" y="64" font-family="'Barlow Condensed',Arial,sans-serif" font-weight="600" font-size="10" fill="#ffffff" text-anchor="middle" letter-spacing="1">VÁLVULAS E EQUIP. INDUSTRIAIS</text>
+    </svg>
+    <h1 style="font-size:1.6rem">Catálogo de Produtos</h1>
+    <p>Válvulas industriais de alta performance · Acessórios pneumáticos · Revenda oficial W.Burger</p>
+  </div>
+  <div class="app" style="padding-top:0">
+
+    <div class="cat-filter-bar">
+      <button class="cat-filter-btn active" onclick="filterCat('todos',this)">Todos</button>
+      <button class="cat-filter-btn" onclick="filterCat('valvulas',this)">Válvulas</button>
+      <button class="cat-filter-btn" onclick="filterCat('acessorios',this)">Acessórios</button>
+      <button class="cat-filter-btn" onclick="filterCat('wburger',this)">W.Burger</button>
+    </div>
+
+    <div class="cat-grid" id="cat-grid">
+
+      <!-- VÁLVULAS -->
+      <div class="prod-card" data-cat="valvulas">
+        <div class="prod-card-icon">🦋<span class="prod-card-badge">Alta Performance</span></div>
+        <div class="prod-card-body">
+          <div class="prod-card-tag">Válvula</div>
+          <div class="prod-card-title">Borboleta Bi-excêntrica Alta Performance</div>
+          <div class="prod-card-desc">Corpo Wafer semi-lug. Ideal para alta pressão, alta/baixa temperatura e serviços críticos. Sede em RPTFE.</div>
+          <div class="prod-specs">
+            <span class="prod-spec-tag">Bitolas 2" a 48"</span>
+            <span class="prod-spec-tag">ASME Cl. 150</span>
+            <span class="prod-spec-tag">-12°C a 280°C</span>
+            <span class="prod-spec-tag">Classe VI</span>
+          </div>
+        </div>
+        <div class="prod-card-footer">
+          <a class="btn-wpp" href="https://wa.me/5516997223976?text=Ol%C3%A1%2C+tenho+interesse+na+V%C3%A1lvula+Borboleta+Bi-exc%C3%AAntrica+Alta+Performance+(2%22+a+48%22).+Poderia+me+enviar+informa%C3%A7%C3%B5es+e+pre%C3%A7o%3F" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Solicitar Orçamento
+          </a>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="valvulas">
+        <div class="prod-card-icon">🦋</div>
+        <div class="prod-card-body">
+          <div class="prod-card-tag">Válvula</div>
+          <div class="prod-card-title">Borboleta Industrial</div>
+          <div class="prod-card-desc">Corpo Wafer lug. Sede disponível em EPDM, Teflon, Buna, Brastec, EPDM branco e Viton. Para serviços gerais e críticos.</div>
+          <div class="prod-specs">
+            <span class="prod-spec-tag">Bitolas 2" a 40"</span>
+            <span class="prod-spec-tag">ASME Cl. 150</span>
+            <span class="prod-spec-tag">20°C a 260°C</span>
+            <span class="prod-spec-tag">Classe VI</span>
+          </div>
+        </div>
+        <div class="prod-card-footer">
+          <a class="btn-wpp" href="https://wa.me/5516997223976?text=Ol%C3%A1%2C+tenho+interesse+na+V%C3%A1lvula+Borboleta+Industrial+(2%22+a+40%22).+Poderia+me+enviar+informa%C3%A7%C3%B5es+e+pre%C3%A7o%3F" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Solicitar Orçamento
+          </a>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="valvulas">
+        <div class="prod-card-icon">🔄</div>
+        <div class="prod-card-body">
+          <div class="prod-card-tag">Válvula</div>
+          <div class="prod-card-title">Válvula de Retenção</div>
+          <div class="prod-card-desc">Corpo Wafer. Sede em EPDM, Buna, Viton ou Metálica. Para produtos químicos, ar, água, vapor, óleos, ácidos e alimentos.</div>
+          <div class="prod-specs">
+            <span class="prod-spec-tag">Bitolas 2" a 40"</span>
+            <span class="prod-spec-tag">ASME Cl. 150</span>
+            <span class="prod-spec-tag">10°C a 400°C</span>
+            <span class="prod-spec-tag">Classe VI</span>
+          </div>
+        </div>
+        <div class="prod-card-footer">
+          <a class="btn-wpp" href="https://wa.me/5516997223976?text=Ol%C3%A1%2C+tenho+interesse+na+V%C3%A1lvula+de+Reten%C3%A7%C3%A3o+(2%22+a+40%22).+Poderia+me+enviar+informa%C3%A7%C3%B5es+e+pre%C3%A7o%3F" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Solicitar Orçamento
+          </a>
+        </div>
+      </div>
+
+      <!-- ACESSÓRIOS -->
+      <div class="prod-card" data-cat="acessorios">
+        <div class="prod-card-icon">⚙️</div>
+        <div class="prod-card-body">
+          <div class="prod-card-tag">Acessório</div>
+          <div class="prod-card-title">Posicionador Pneumático 4–20 mA</div>
+          <div class="prod-card-desc">Para atuadores de ação simples e dupla. Carcaça em alumínio fundido, indicador de posição de alta visibilidade, configuração rápida de zero e amplitude.</div>
+          <div class="prod-specs">
+            <span class="prod-spec-tag">4–20 mA</span>
+            <span class="prod-spec-tag">Intervalo dividido</span>
+            <span class="prod-spec-tag">Ambientes hostis</span>
+          </div>
+        </div>
+        <div class="prod-card-footer">
+          <a class="btn-wpp" href="https://wa.me/5516997223976?text=Ol%C3%A1%2C+tenho+interesse+no+Posicionador+Pneum%C3%A1tico+4-20mA.+Poderia+me+enviar+informa%C3%A7%C3%B5es+e+pre%C3%A7o%3F" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Solicitar Orçamento
+          </a>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="acessorios">
+        <div class="prod-card-icon">🔵</div>
+        <div class="prod-card-body">
+          <div class="prod-card-tag">Acessório</div>
+          <div class="prod-card-title">Atuador Pneumático</div>
+          <div class="prod-card-desc">Dupla ou simples ação. Corpo em alumínio anodizado ou aço pintado epóxi. Montagem ISO 5211 para acoplamento direto em válvulas.</div>
+          <div class="prod-specs">
+            <span class="prod-spec-tag">Até 12.992 Nm</span>
+            <span class="prod-spec-tag">3,0 a 8,0 bar</span>
+            <span class="prod-spec-tag">-20°C a +80°C</span>
+            <span class="prod-spec-tag">ISO 5211 / NAMUR</span>
+          </div>
+        </div>
+        <div class="prod-card-footer">
+          <a class="btn-wpp" href="https://wa.me/5516997223976?text=Ol%C3%A1%2C+tenho+interesse+no+Atuador+Pneum%C3%A1tico.+Poderia+me+enviar+informa%C3%A7%C3%B5es+e+pre%C3%A7o%3F" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Solicitar Orçamento
+          </a>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="acessorios">
+        <div class="prod-card-icon">⚡</div>
+        <div class="prod-card-body">
+          <div class="prod-card-tag">Acessório</div>
+          <div class="prod-card-title">Válvula Solenóide NAMUR 5/2 Vias – 24 VCC</div>
+          <div class="prod-card-desc">Montagem direta em atuadores padrão NAMUR. Grau de proteção IP65 com conector DIN 43650. Sem necessidade de tubulações intermediárias.</div>
+          <div class="prod-specs">
+            <span class="prod-spec-tag">24 VCC</span>
+            <span class="prod-spec-tag">IP65</span>
+            <span class="prod-spec-tag">5 vias / 2 posições</span>
+            <span class="prod-spec-tag">-10°C a +50°C</span>
+          </div>
+        </div>
+        <div class="prod-card-footer">
+          <a class="btn-wpp" href="https://wa.me/5516997223976?text=Ol%C3%A1%2C+tenho+interesse+na+V%C3%A1lvula+Solen%C3%B3ide+NAMUR+5%2F2+Vias+24VCC.+Poderia+me+enviar+informa%C3%A7%C3%B5es+e+pre%C3%A7o%3F" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Solicitar Orçamento
+          </a>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="acessorios">
+        <div class="prod-card-icon">🔧</div>
+        <div class="prod-card-body">
+          <div class="prod-card-tag">Acessório</div>
+          <div class="prod-card-title">Caixa Redutora</div>
+          <div class="prod-card-desc">Flange ISO 5211. Corpo em ferro fundido com epóxi de alta resistência. Proteção IP65 contra poeira e respingos. Para válvulas de grande porte.</div>
+          <div class="prod-specs">
+            <span class="prod-spec-tag">Até 8.000 Nm</span>
+            <span class="prod-spec-tag">ISO 5211</span>
+            <span class="prod-spec-tag">IP65</span>
+          </div>
+        </div>
+        <div class="prod-card-footer">
+          <a class="btn-wpp" href="https://wa.me/5516997223976?text=Ol%C3%A1%2C+tenho+interesse+na+Caixa+Redutora+para+v%C3%A1lvulas.+Poderia+me+enviar+informa%C3%A7%C3%B5es+e+pre%C3%A7o%3F" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Solicitar Orçamento
+          </a>
+        </div>
+      </div>
+
+      <!-- W.BURGER -->
+      <div class="prod-card" data-cat="wburger">
+        <div class="prod-card-icon">🛡️<span class="prod-card-badge">Revenda Oficial</span></div>
+        <div class="prod-card-body">
+          <div class="prod-card-tag">W.Burger · Válvula de Segurança</div>
+          <div class="prod-card-title">Série WB 2500</div>
+          <div class="prod-card-desc">Válvula de segurança e alívio certificada. Amplamente utilizada em caldeiras, sistemas de vapor e processos petroquímicos. ~80 anos de tradição.</div>
+          <div class="prod-specs">
+            <span class="prod-spec-tag">Revenda Autorizada</span>
+            <span class="prod-spec-tag">Caldeiras</span>
+            <span class="prod-spec-tag">Vapor</span>
+            <span class="prod-spec-tag">Petroquímica</span>
+          </div>
+        </div>
+        <div class="prod-card-footer">
+          <a class="btn-wpp" href="https://wa.me/5516997223976?text=Ol%C3%A1%2C+tenho+interesse+na+V%C3%A1lvula+W.Burger+S%C3%A9rie+WB+2500.+Poderia+me+enviar+informa%C3%A7%C3%B5es+e+pre%C3%A7o%3F" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Solicitar Orçamento
+          </a>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="wburger">
+        <div class="prod-card-icon">🛡️<span class="prod-card-badge">Revenda Oficial</span></div>
+        <div class="prod-card-body">
+          <div class="prod-card-tag">W.Burger · Válvula de Segurança</div>
+          <div class="prod-card-title">Série WB 7000</div>
+          <div class="prod-card-desc">Válvula de segurança e alívio para serviços de alta exigência. Certificada e reconhecida pela qualidade no setor industrial brasileiro.</div>
+          <div class="prod-specs">
+            <span class="prod-spec-tag">Revenda Autorizada</span>
+            <span class="prod-spec-tag">Alta Exigência</span>
+            <span class="prod-spec-tag">Certificada</span>
+          </div>
+        </div>
+        <div class="prod-card-footer">
+          <a class="btn-wpp" href="https://wa.me/5516997223976?text=Ol%C3%A1%2C+tenho+interesse+na+V%C3%A1lvula+W.Burger+S%C3%A9rie+WB+7000.+Poderia+me+enviar+informa%C3%A7%C3%B5es+e+pre%C3%A7o%3F" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.98-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Solicitar Orçamento
+          </a>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="wburger">
+        <div class="prod-card-icon">🛡️<span class="prod-card-badge">Revenda Oficial</span></div>
+        <div class="prod-card-body">
+          <div class="prod-card-tag">W.Burger · Válvula de Segurança</div>
+          <div class="prod-card-title">Série WB 3000</div>
+          <div class="prod-card-desc">Válvula de segurança e alívio da linha WB 3000. Confiabilidade e conformidade com normas técnicas mais exigentes do setor industrial.</div>
+          <div class="prod-specs">
+            <span class="prod-spec-tag">Revenda Autorizada</span>
+            <span class="prod-spec-tag">NR-13</span>
+            <span class="prod-spec-tag">Normas ABNT</span>
+          </div>
+        </div>
+        <div class="prod-card-footer">
+          <a class="btn-wpp" href="https://wa.me/5516997223976?text=Ol%C3%A1%2C+tenho+interesse+na+V%C3%A1lvula+W.Burger+S%C3%A9rie+WB+3000.+Poderia+me+enviar+informa%C3%A7%C3%B5es+e+pre%C3%A7o%3F" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Solicitar Orçamento
+          </a>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="wburger">
+        <div class="prod-card-icon">🛡️<span class="prod-card-badge">Revenda Oficial</span></div>
+        <div class="prod-card-body">
+          <div class="prod-card-tag">W.Burger · Válvula de Segurança</div>
+          <div class="prod-card-title">Válvula Sentinela W.Burger</div>
+          <div class="prod-card-desc">Válvula Sentinela da linha W.Burger. Solução segura e eficiente para proteção de sistemas pressurizados em operações industriais críticas.</div>
+          <div class="prod-specs">
+            <span class="prod-spec-tag">Revenda Autorizada</span>
+            <span class="prod-spec-tag">Sistemas pressurizados</span>
+            <span class="prod-spec-tag">Serviço crítico</span>
+          </div>
+        </div>
+        <div class="prod-card-footer">
+          <a class="btn-wpp" href="https://wa.me/5516997223976?text=Ol%C3%A1%2C+tenho+interesse+na+V%C3%A1lvula+Sentinela+W.Burger.+Poderia+me+enviar+informa%C3%A7%C3%B5es+e+pre%C3%A7o%3F" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Solicitar Orçamento
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /cat-grid -->
+
+    <!-- Banner parceria -->
+    <div class="parceiro-banner">
+      <div class="pb-icon">🤝</div>
+      <div>
+        <h3>Revenda Oficial W.Burger — quase 80 anos de tradição</h3>
+        <p>Oferecemos toda a linha de válvulas de segurança e alívio W.Burger com suporte técnico e comercial completo. Soluções certificadas para caldeiras, vapor, petroquímica e mais.</p>
+      </div>
+      <a class="btn-wpp" href="https://wa.me/5516997223976?text=Ol%C3%A1%2C+gostaria+de+mais+informa%C3%A7%C3%B5es+sobre+a+linha+W.Burger." target="_blank" style="flex-shrink:0;min-width:160px;text-decoration:none">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Falar no WhatsApp
+      </a>
+    </div>
+
+  </div>
+</div><!-- /view-catalogo -->
+
+<div id="view-orcamento"><div class="app">
   <div class="stepper">
     <div class="step active" id="step-0" onclick="goStep(0)"><div class="step-num">1</div><div class="step-label">Cliente & Serviço</div></div>
     <div class="step" id="step-1" onclick="goStep(1)"><div class="step-num">2</div><div class="step-label">Custos de Campo</div></div>
@@ -393,6 +743,8 @@ input.func-input{color:#a78bfa;}
     </div>
   </div>
 </div>
+
+</div></div><!-- /app /view-orcamento -->
 
 <div class="toast" id="toast"></div>
 
@@ -1173,12 +1525,37 @@ function toast(msg) {
 }
 
 // ═══════════════════════════════════════════════════════
+// VIEWS (catálogo / orçamento)
+// ═══════════════════════════════════════════════════════
+function showView(view) {
+  const isCat = view === 'catalogo';
+  document.getElementById('view-catalogo').style.display = isCat ? 'block' : 'none';
+  document.getElementById('view-orcamento').style.display = isCat ? 'none' : 'block';
+  document.getElementById('nav-catalogo').style.display = isCat ? 'none' : '';
+  document.getElementById('nav-orcamento').style.display = isCat ? '' : 'none';
+  document.getElementById('btn-limpar').style.display = isCat ? 'none' : '';
+  document.getElementById('btn-salvar').style.display = isCat ? 'none' : '';
+  document.getElementById('btn-pdf').style.display = isCat ? 'none' : '';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function filterCat(cat, btn) {
+  document.querySelectorAll('.cat-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#cat-grid .prod-card').forEach(card => {
+    card.style.display = (cat === 'todos' || card.dataset.cat === cat) ? '' : 'none';
+  });
+}
+
+// ═══════════════════════════════════════════════════════
 // START
 // ═══════════════════════════════════════════════════════
 function init() {
   buildSections();
   loadLocal();
   calc();
+  // Garante estado inicial correto dos botões de navegação
+  document.getElementById('nav-orcamento').style.display = 'none';
   // Registra Service Worker para PWA
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(()=>{});
